@@ -7,6 +7,18 @@ package Interfaces;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,13 +26,17 @@ import java.awt.Toolkit;
  */
 public class Perfil extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Perfil
-     */
+    Connection conex;
     public Perfil() {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        transparente();
+        try {
+            initComponents();
+            this.setLocationRelativeTo(null);
+            this.setTitle("Visualización de datos");
+            transparente();
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex){
+            Logger.getLogger(Crea_grupos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public Image getIconImage(){
@@ -35,12 +51,12 @@ public class Perfil extends javax.swing.JFrame {
         Minimizar.setOpaque(false);
         Minimizar.setContentAreaFilled(false);
         Minimizar.setBorderPainted(false);
-        Modificar.setOpaque(false);
-        Modificar.setContentAreaFilled(false);
-        Modificar.setBorderPainted(false);
         Visualizar.setOpaque(false);
         Visualizar.setContentAreaFilled(false);
         Visualizar.setBorderPainted(false);
+        Modificar.setOpaque(false);
+        Modificar.setContentAreaFilled(false);
+        Modificar.setBorderPainted(false);
         Actualizar.setOpaque(false);
         Actualizar.setContentAreaFilled(false);
         Actualizar.setBorderPainted(false);
@@ -63,10 +79,10 @@ public class Perfil extends javax.swing.JFrame {
         Salir = new javax.swing.JLabel();
         Inicio = new javax.swing.JLabel();
         Perfil = new javax.swing.JLabel();
-        Clases = new javax.swing.JLabel();
         Materias = new javax.swing.JLabel();
         Salud = new javax.swing.JLabel();
         Clase = new javax.swing.JLabel();
+        Trabajos = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         Minimizar = new javax.swing.JButton();
         Cerrar = new javax.swing.JButton();
@@ -75,34 +91,29 @@ public class Perfil extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
+        Foto = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        Sexo = new javax.swing.JTextField();
+        Apellido = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        Nombre = new javax.swing.JTextField();
+        Enfermedad = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
-        Actualizar = new javax.swing.JButton();
-        Visualizar = new javax.swing.JButton();
+        Fecha = new javax.swing.JTextField();
+        Codigo = new javax.swing.JTextField();
+        Correo = new javax.swing.JTextField();
+        Grupo = new javax.swing.JTextField();
         Modificar = new javax.swing.JButton();
+        jLabel33 = new javax.swing.JLabel();
+        Visualizar = new javax.swing.JButton();
+        Actualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -143,7 +154,7 @@ public class Perfil extends javax.swing.JFrame {
                 SalirMouseExited(evt);
             }
         });
-        jPanel1.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, -1, -1));
+        jPanel1.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, -1, -1));
 
         Inicio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Inicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/casa.png"))); // NOI18N
@@ -181,24 +192,6 @@ public class Perfil extends javax.swing.JFrame {
         });
         jPanel1.add(Perfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 140, -1));
 
-        Clases.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Clases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/estudiar.png"))); // NOI18N
-        Clases.setText("Trabajos");
-        Clases.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                ClasesMouseMoved(evt);
-            }
-        });
-        Clases.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ClasesMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ClasesMouseExited(evt);
-            }
-        });
-        jPanel1.add(Clases, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 140, -1));
-
         Materias.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Materias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/educacion.png"))); // NOI18N
         Materias.setText("Materias");
@@ -233,11 +226,11 @@ public class Perfil extends javax.swing.JFrame {
                 SaludMouseExited(evt);
             }
         });
-        jPanel1.add(Salud, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
+        jPanel1.add(Salud, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, -1, -1));
 
         Clase.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Clase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/presentacion.png"))); // NOI18N
-        Clase.setText("Unirme a una clase");
+        Clase.setText("Hacer una entrega");
         Clase.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 ClaseMouseMoved(evt);
@@ -251,7 +244,25 @@ public class Perfil extends javax.swing.JFrame {
                 ClaseMouseExited(evt);
             }
         });
-        jPanel1.add(Clase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 460, -1, -1));
+        jPanel1.add(Clase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, -1, -1));
+
+        Trabajos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Trabajos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/estudiar.png"))); // NOI18N
+        Trabajos.setText("Trabajos");
+        Trabajos.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                TrabajosMouseMoved(evt);
+            }
+        });
+        Trabajos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TrabajosMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TrabajosMouseExited(evt);
+            }
+        });
+        jPanel1.add(Trabajos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 140, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 580));
 
@@ -305,128 +316,113 @@ public class Perfil extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setText("Información del estudiante");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, -1, -1));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, -1, -1));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setText("Sexo:");
-        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, -1, -1));
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, -1, -1));
 
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/foto (1).png"))); // NOI18N
-        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 140, -1));
+        Foto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarioperfil.png"))); // NOI18N
+        Foto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FotoMouseClicked(evt);
+            }
+        });
+        jPanel2.add(Foto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 140, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setText("Rol:");
-        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, -1, -1));
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 430, -1, -1));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel23.setText("Apellidos:");
-        jPanel2.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, -1, -1));
+        jPanel2.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, -1, -1));
 
         jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextField1.setText("Estudiante");
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 410, 180, 30));
+        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 420, 180, 30));
 
-        jTextField2.setEditable(false);
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 220, 160, 30));
+        Sexo.setEditable(false);
+        Sexo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Sexo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel2.add(Sexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 180, 160, 30));
 
-        jTextField3.setEditable(false);
-        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 180, 30));
+        Apellido.setEditable(false);
+        Apellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Apellido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel2.add(Apellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 180, 30));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setText("Fecha de nacimiento:");
-        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, -1, -1));
-
-        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel25.setText("No. Documento:");
-        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, -1, -1));
+        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, -1, -1));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setText("Enfermedad:");
-        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 190, -1, -1));
+        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, -1, -1));
 
-        jTextField4.setEditable(false);
-        jTextField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 180, 30));
+        Nombre.setEditable(false);
+        Nombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Nombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel2.add(Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 180, 30));
 
-        jTextField5.setEditable(false);
-        jTextField5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 140, 160, 30));
-
-        jTextField6.setEditable(false);
-        jTextField6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 180, 160, 30));
+        Enfermedad.setEditable(false);
+        Enfermedad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Enfermedad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel2.add(Enfermedad, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 140, 160, 30));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel11.setText("Información personal");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, -1, -1));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, -1, -1));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel27.setText("Nombre:");
-        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
+        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, -1, -1));
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel28.setText("Correo:");
-        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
+        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, -1, -1));
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel29.setText("Código:");
-        jPanel2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, -1, -1));
-
-        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel30.setText("Institución:");
-        jPanel2.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, -1, -1));
-
-        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel31.setText("Grado:");
-        jPanel2.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, -1, -1));
+        jLabel29.setText("Por favor ingresa tu código:");
+        jPanel2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel32.setText("Grupo:");
-        jPanel2.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, -1, -1));
+        jPanel2.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, -1, -1));
 
-        jTextField7.setEditable(false);
-        jTextField7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 180, 30));
+        Fecha.setEditable(false);
+        Fecha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Fecha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel2.add(Fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, 180, 30));
 
-        jTextField8.setEditable(false);
-        jTextField8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 330, 180, 30));
+        Codigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Codigo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel2.add(Codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 180, 30));
 
-        jTextField9.setEditable(false);
-        jTextField9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, 180, 30));
+        Correo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Correo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel2.add(Correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 420, 180, 30));
 
-        jTextField10.setEditable(false);
-        jTextField10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 180, 30));
+        Grupo.setEditable(false);
+        Grupo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Grupo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel2.add(Grupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 380, 180, 30));
 
-        jTextField11.setEditable(false);
-        jTextField11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 330, 180, 30));
+        Modificar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
+        Modificar.setText("Modificar");
+        Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 370, -1, -1));
 
-        jTextField12.setEditable(false);
-        jTextField12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, 180, 30));
-
-        Actualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizado.png"))); // NOI18N
-        Actualizar.setText("Actualizar");
-        jPanel2.add(Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 400, -1, -1));
+        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel33.setText("Código:");
+        jPanel2.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
 
         Visualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Visualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ver.png"))); // NOI18N
@@ -436,12 +432,17 @@ public class Perfil extends javax.swing.JFrame {
                 VisualizarActionPerformed(evt);
             }
         });
-        jPanel2.add(Visualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 300, -1, -1));
+        jPanel2.add(Visualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 310, -1, -1));
 
-        Modificar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
-        Modificar.setText("Modificar");
-        jPanel2.add(Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 350, -1, -1));
+        Actualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizado.png"))); // NOI18N
+        Actualizar.setText("Actualizar");
+        Actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActualizarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 430, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 800, 540));
 
@@ -455,6 +456,14 @@ public class Perfil extends javax.swing.JFrame {
     private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel1MouseMoved
+
+    private void MinimizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MinimizarActionPerformed
+        this.setState (Pag_Principal.ICONIFIED);
+    }//GEN-LAST:event_MinimizarActionPerformed
+
+    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_CerrarActionPerformed
 
     private void SalirMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirMouseMoved
         Salir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(143,170,220)));
@@ -498,18 +507,6 @@ public class Perfil extends javax.swing.JFrame {
         Perfil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(168,201,255)));
     }//GEN-LAST:event_PerfilMouseExited
 
-    private void ClasesMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClasesMouseMoved
-        Clases.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(143,170,220)));
-    }//GEN-LAST:event_ClasesMouseMoved
-
-    private void ClasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClasesMouseClicked
-
-    }//GEN-LAST:event_ClasesMouseClicked
-
-    private void ClasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClasesMouseExited
-        Clases.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(168,201,255)));
-    }//GEN-LAST:event_ClasesMouseExited
-
     private void MateriasMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MateriasMouseMoved
         Materias.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(143,170,220)));
     }//GEN-LAST:event_MateriasMouseMoved
@@ -524,41 +521,166 @@ public class Perfil extends javax.swing.JFrame {
         Materias.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(168,201,255)));
     }//GEN-LAST:event_MateriasMouseExited
 
+    private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
+        if (Codigo.getText().equals("")){
+           JOptionPane.showMessageDialog(null, "Antes de modificar tus datos debes visualizarlos");
+       }else{
+        JOptionPane.showMessageDialog(null,"Solo puedes modificar tu correo");
+        int a = JOptionPane.showConfirmDialog(null,"¿Deseas modificar tu correo?","Pregunta",JOptionPane.YES_NO_OPTION);
+        
+        if (a==JOptionPane.YES_OPTION){
+            Correo.setText(" ");
+        }else if (a==JOptionPane.NO_OPTION){
+            JOptionPane.showMessageDialog(null,"OK");
+        }
+        }
+    }//GEN-LAST:event_ModificarActionPerformed
+
     private void SaludMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaludMouseMoved
         Salud.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(143,170,220)));
     }//GEN-LAST:event_SaludMouseMoved
 
     private void SaludMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaludMouseClicked
 
+        ResultSet resultado = null;
+        int cod;
+        String enfermedad;
+
+        cod =Integer.parseInt(JOptionPane.showInputDialog("Digita tu código estudiantil"));
+
+        try{
+            conex = DriverManager.getConnection("jdbc:mysql://localhost/thats_study","root","");
+            Statement st=conex.createStatement();
+
+            resultado=st.executeQuery("SELECT * FROM estudiante  WHERE Codigo_Estu ="+cod);
+
+            if(resultado.next()==true){
+                enfermedad = resultado.getString("Enfermedad");
+                if (enfermedad.equals("Diabetes")){
+                    this.setVisible(false);
+                    Diabetes_Estud e = new Diabetes_Estud();
+                    e.setVisible(true);
+                }else if (enfermedad.equals("Tiroides")){
+                    this.setVisible(false);
+                    Tiroides_Estud e = new Tiroides_Estud();
+                    e.setVisible(true);
+                }else if (enfermedad.equals("Hipertension")){
+                    this.setVisible(false);
+                    Hiperten_Estud e = new Hiperten_Estud();
+                    e.setVisible(true);
+                }else if (enfermedad.equals("No_aplica")){
+                    this.setVisible(false);
+                    Salud_Estud e = new Salud_Estud();
+                    e.setVisible(true);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"Código estudiantil inexistente");
+            }
+            st.close();
+            conex.close();
+
+        }catch (SQLException ex){
+            Logger.getLogger(Crea_grupos.class.getName()).log(Level.SEVERE,null,ex);
+        }
     }//GEN-LAST:event_SaludMouseClicked
 
     private void SaludMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaludMouseExited
         Salud.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(168,201,255)));
     }//GEN-LAST:event_SaludMouseExited
 
+    private void FotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FotoMouseClicked
+        JFileChooser archivo = new JFileChooser();
+        int Ventana = archivo.showOpenDialog(null);
+        if (Ventana == JFileChooser.APPROVE_OPTION){
+            File file = archivo.getSelectedFile();
+            Foto.setText(String.valueOf(file));
+            Image foto = getToolkit().getImage(Foto.getText());
+            foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
+            Foto.setIcon(new ImageIcon (foto));
+        }
+    }//GEN-LAST:event_FotoMouseClicked
+
     private void ClaseMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClaseMouseMoved
         Clase.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(143,170,220)));
     }//GEN-LAST:event_ClaseMouseMoved
 
     private void ClaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClaseMouseClicked
-
+        this.setVisible(false);
+        Crea_Entrega v = new Crea_Entrega();
+        v.setVisible(true);
     }//GEN-LAST:event_ClaseMouseClicked
 
     private void ClaseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClaseMouseExited
         Clase.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(168,201,255)));
     }//GEN-LAST:event_ClaseMouseExited
 
-    private void MinimizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MinimizarActionPerformed
-        this.setState (Pag_Principal.ICONIFIED);
-    }//GEN-LAST:event_MinimizarActionPerformed
+    private void TrabajosMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TrabajosMouseMoved
+        Trabajos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(143,170,220)));
+    }//GEN-LAST:event_TrabajosMouseMoved
 
-    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_CerrarActionPerformed
+    private void TrabajosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TrabajosMouseClicked
+        this.setVisible(false);
+        Trabajos v= new Trabajos();
+        v.setVisible(true);
+    }//GEN-LAST:event_TrabajosMouseClicked
+
+    private void TrabajosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TrabajosMouseExited
+        Trabajos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(168,201,255)));
+    }//GEN-LAST:event_TrabajosMouseExited
 
     private void VisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarActionPerformed
-        // TODO add your handling code here:
+        if (!Codigo.getText().equals("")){
+         
+          ResultSet resultado = null;
+        
+         try{
+           conex = DriverManager.getConnection("jdbc:mysql://localhost/thats_study","root","");
+           Statement st=conex.createStatement();
+           
+           resultado=st.executeQuery("SELECT *, grupos.Nombre FROM estudiante INNER JOIN grupos ON estudiante.CodigoG = grupos.ID_GRUPO WHERE Codigo_Estu ="+Codigo.getText());
+            
+           if (resultado.next()== true){
+             Nombre.setText(resultado.getString("Nombre"));
+             Apellido.setText(resultado.getString("Apellido"));
+             Sexo.setText(resultado.getString("Sexo"));
+             Correo.setText(resultado.getString("Correo"));
+             Fecha.setText(resultado.getString("Fecha_Nac"));
+             Grupo.setText(resultado.getString("grupos.Nombre"));
+             Enfermedad.setText(resultado.getString("Enfermedad")); 
+           }else if (resultado.next()== false){
+               JOptionPane.showMessageDialog(null,"Código no existente","ERROR",JOptionPane.ERROR_MESSAGE);
+            }
+            
+            st.close();
+            conex.close();
+
+         }catch (SQLException ex){
+            Logger.getLogger(Perfil.class.getName()).log(Level.SEVERE,null,ex);
+         }
+        }else{
+          JOptionPane.showMessageDialog(null,"Ingresa tu código para poder visualizar los datos","ERROR",JOptionPane.ERROR_MESSAGE);
+      }
     }//GEN-LAST:event_VisualizarActionPerformed
+
+    private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
+        if (Correo.getText().equals("")){
+           JOptionPane.showMessageDialog(null, "Debes llenar el campo del correo para poder actualizarlo");
+       }else{
+        Statement st = null;
+        
+        try{
+           conex = DriverManager.getConnection("jdbc:mysql://localhost/thats_study","root","");
+           st=conex.createStatement();
+           
+           int datos =st.executeUpdate("UPDATE estudiante SET Correo ='"+Correo.getText()+"' WHERE Codigo_Estu = '"+Codigo.getText()+"'");
+           JOptionPane.showMessageDialog(null,"Datos actualizados");
+           st.close();
+           conex.close();
+        }catch (SQLException ex){
+            Logger.getLogger(Perfil.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        }
+    }//GEN-LAST:event_ActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -597,49 +719,44 @@ public class Perfil extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
+    private javax.swing.JTextField Apellido;
     private javax.swing.JButton Cerrar;
     private javax.swing.JLabel Clase;
-    private javax.swing.JLabel Clases;
+    private javax.swing.JTextField Codigo;
+    private javax.swing.JTextField Correo;
+    private javax.swing.JTextField Enfermedad;
+    private javax.swing.JTextField Fecha;
+    private javax.swing.JLabel Foto;
+    private javax.swing.JTextField Grupo;
     private javax.swing.JButton Imagen;
     private javax.swing.JLabel Inicio;
     private javax.swing.JLabel Materias;
     private javax.swing.JButton Minimizar;
     private javax.swing.JButton Modificar;
+    private javax.swing.JTextField Nombre;
     private javax.swing.JLabel Perfil;
     private javax.swing.JLabel Salir;
     private javax.swing.JLabel Salud;
+    private javax.swing.JTextField Sexo;
+    private javax.swing.JLabel Trabajos;
     private javax.swing.JButton Visualizar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }

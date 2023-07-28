@@ -50,14 +50,13 @@ public class Final extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        Logo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         Cuenta = new javax.swing.JLabel();
         Registro = new javax.swing.JLabel();
         Cerrar = new javax.swing.JButton();
         Minimizar = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -72,8 +71,21 @@ public class Final extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 1, 87, 96));
+        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
+        Logo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                LogoMouseMoved(evt);
+            }
+        });
+        Logo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LogoMouseExited(evt);
+            }
+        });
+        jPanel1.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 11, 80, 70));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Nombre.png"))); // NOI18N
         jLabel3.setText("jLabel3");
@@ -135,13 +147,9 @@ public class Final extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1050, 90));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel8.setText("UTILIZARNOS");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 430, -1, -1));
-
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel9.setText("GRACIAS POR");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 360, -1, -1));
+        jLabel9.setText("¡VUELVE PRONTO!");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 420, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/inicio.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1050, -1));
@@ -167,13 +175,13 @@ public class Final extends javax.swing.JFrame {
 
     private void RegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistroMouseClicked
         this.setVisible(false);
-        Registro v= new Registro();
+        Rol v= new Rol();
         v.setVisible(true);
     }//GEN-LAST:event_RegistroMouseClicked
 
     private void CuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CuentaMouseClicked
         this.setVisible(false);
-        Cuenta v= new Cuenta();
+        Rol_IS v= new Rol_IS();
         v.setVisible(true);
     }//GEN-LAST:event_CuentaMouseClicked
 
@@ -184,6 +192,20 @@ public class Final extends javax.swing.JFrame {
     private void MinimizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MinimizarActionPerformed
         this.setState (Pag_Principal.ICONIFIED);
     }//GEN-LAST:event_MinimizarActionPerformed
+
+    private void LogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoMouseClicked
+        this.setVisible(false);
+        Inicio v = new Inicio();
+        v.setVisible(true);
+    }//GEN-LAST:event_LogoMouseClicked
+
+    private void LogoMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoMouseMoved
+        Logo.setBorder(javax.swing.BorderFactory.createLineBorder(Color.gray));
+    }//GEN-LAST:event_LogoMouseMoved
+
+    private void LogoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoMouseExited
+        Logo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(217, 217, 217)));
+    }//GEN-LAST:event_LogoMouseExited
 
     /**
      * @param args the command line arguments
@@ -224,13 +246,12 @@ public class Final extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cerrar;
     private javax.swing.JLabel Cuenta;
+    private javax.swing.JLabel Logo;
     private javax.swing.JButton Minimizar;
     private javax.swing.JLabel Registro;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

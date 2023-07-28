@@ -208,13 +208,13 @@ public class Inicio extends javax.swing.JFrame {
 
     private void RegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistroMouseClicked
         this.setVisible(false);
-        Registro v= new Registro();
+        Rol v= new Rol();
         v.setVisible(true);
     }//GEN-LAST:event_RegistroMouseClicked
 
     private void CuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CuentaMouseClicked
         this.setVisible(false);
-        Cuenta v= new Cuenta();
+        Rol_IS v= new Rol_IS();
         v.setVisible(true);
     }//GEN-LAST:event_CuentaMouseClicked
 

@@ -5,6 +5,10 @@
  */
 package Interfaces;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
@@ -16,6 +20,7 @@ public class Rol extends javax.swing.JFrame {
      */
     public Rol() {
         initComponents();
+        setIconImage(getIconImage());
         this.setLocationRelativeTo(null);
         transparente();
     }
@@ -27,6 +32,12 @@ public class Rol extends javax.swing.JFrame {
         Minimizar.setOpaque(false);
         Minimizar.setContentAreaFilled(false);
         Minimizar.setBorderPainted(false);
+    }
+    
+    @Override
+    public Image getIconImage(){
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Imagenes/Logo.png"));
+        return  retValue;
     }
 
     /**
@@ -45,6 +56,7 @@ public class Rol extends javax.swing.JFrame {
         Profesor = new javax.swing.JRadioButton();
         Estudiante = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Cerrar = new javax.swing.JButton();
@@ -59,19 +71,25 @@ public class Rol extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(143, 170, 220));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel2.setText("¿Cómo deseas registrate?");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addComponent(jLabel2)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 48, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel2.setText("Usuario por favor escoge tu rol");
 
         jButton1.setBackground(new java.awt.Color(143, 170, 220));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -90,29 +108,33 @@ public class Rol extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/c0d1da39c107f4f840789bb58b890aeb.png"))); // NOI18N
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel4.setText("Usuario por favor escoge tu rol");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
+                        .addGap(56, 56, 56)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Estudiante)
-                                    .addComponent(Profesor)))))
+                            .addComponent(Estudiante)
+                            .addComponent(Profesor)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(124, 124, 124)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(91, 91, 91)
-                        .addComponent(jLabel3)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                        .addComponent(jLabel3))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(58, 58, 58)
+                    .addComponent(jLabel4)
+                    .addContainerGap(60, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,18 +142,21 @@ public class Rol extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(54, 54, 54)
                 .addComponent(Profesor)
                 .addGap(18, 18, 18)
                 .addComponent(Estudiante)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
+                .addGap(97, 97, 97))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(343, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addGap(246, 246, 246)))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 440, 470));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 420, 540));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -146,7 +171,7 @@ public class Rol extends javax.swing.JFrame {
                 CerrarActionPerformed(evt);
             }
         });
-        jPanel3.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, 40, 40));
+        jPanel3.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 40, 40));
 
         Minimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minimizar.png"))); // NOI18N
         Minimizar.addActionListener(new java.awt.event.ActionListener() {
@@ -154,9 +179,9 @@ public class Rol extends javax.swing.JFrame {
                 MinimizarActionPerformed(evt);
             }
         });
-        jPanel3.add(Minimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 40, 40));
+        jPanel3.add(Minimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 40, 40));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 40));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -172,13 +197,15 @@ public class Rol extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (Profesor.isSelected()) {
             this.setVisible(false);
-            Registro1 p = new Registro1();
+            Registro_Profesor p = new Registro_Profesor();
             p.setVisible(true);
-        } if (Estudiante.isSelected()) {
+        } else if (Estudiante.isSelected()) {
             this.setVisible(false);
-            Registro2 e = new Registro2();
+            Registro_Estudiante e = new Registro_Estudiante();
             e.setVisible(true);
-        } 
+        } else{
+            JOptionPane.showMessageDialog(null, "Debes elegir un rol");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -225,6 +252,7 @@ public class Rol extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

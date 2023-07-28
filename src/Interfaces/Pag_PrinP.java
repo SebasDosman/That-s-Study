@@ -7,6 +7,14 @@ package Interfaces;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -15,13 +23,17 @@ import java.awt.Toolkit;
  */
 public class Pag_PrinP extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Pag_PrinP
-     */
+    Connection conex;
     public Pag_PrinP() {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        botontransparente();
+        try {
+            initComponents();
+            this.setLocationRelativeTo(null);
+            botontransparente();
+            this.setTitle("CREACIÓN DE GRUPOS");
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex){
+            Logger.getLogger(Crea_grupos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public Image getIconImage(){
@@ -51,13 +63,14 @@ public class Pag_PrinP extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        Imagen = new javax.swing.JButton();
         Salir = new javax.swing.JLabel();
         Inicio = new javax.swing.JLabel();
         Perfil = new javax.swing.JLabel();
-        Clases = new javax.swing.JLabel();
         Salud = new javax.swing.JLabel();
         Clase = new javax.swing.JLabel();
-        Imagen = new javax.swing.JButton();
+        Materias = new javax.swing.JLabel();
+        Clases = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         Minimizar = new javax.swing.JButton();
         Cerrar = new javax.swing.JButton();
@@ -75,6 +88,7 @@ public class Pag_PrinP extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -90,6 +104,14 @@ public class Pag_PrinP extends javax.swing.JFrame {
             }
         });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imagen.png"))); // NOI18N
+        Imagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ImagenActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 160, 160));
 
         Salir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrar-sesion.png"))); // NOI18N
@@ -107,7 +129,7 @@ public class Pag_PrinP extends javax.swing.JFrame {
                 SalirMouseExited(evt);
             }
         });
-        jPanel1.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 460, -1, -1));
+        jPanel1.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, -1, -1));
 
         Inicio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Inicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/casa.png"))); // NOI18N
@@ -145,24 +167,6 @@ public class Pag_PrinP extends javax.swing.JFrame {
         });
         jPanel1.add(Perfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 140, -1));
 
-        Clases.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Clases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/estudiar.png"))); // NOI18N
-        Clases.setText("Clases");
-        Clases.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                ClasesMouseMoved(evt);
-            }
-        });
-        Clases.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ClasesMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ClasesMouseExited(evt);
-            }
-        });
-        jPanel1.add(Clases, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 140, -1));
-
         Salud.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Salud.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/corazon.png"))); // NOI18N
         Salud.setText("Salud/Deporte");
@@ -179,11 +183,11 @@ public class Pag_PrinP extends javax.swing.JFrame {
                 SaludMouseExited(evt);
             }
         });
-        jPanel1.add(Salud, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, -1));
+        jPanel1.add(Salud, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
 
         Clase.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Clase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/presentacion.png"))); // NOI18N
-        Clase.setText("Crear asignación ");
+        Clase.setText("Crear materia");
         Clase.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 ClaseMouseMoved(evt);
@@ -197,15 +201,43 @@ public class Pag_PrinP extends javax.swing.JFrame {
                 ClaseMouseExited(evt);
             }
         });
-        jPanel1.add(Clase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
+        jPanel1.add(Clase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 460, -1, -1));
 
-        Imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imagen.png"))); // NOI18N
-        Imagen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ImagenActionPerformed(evt);
+        Materias.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Materias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/educacion.png"))); // NOI18N
+        Materias.setText("Entregas");
+        Materias.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                MateriasMouseMoved(evt);
             }
         });
-        jPanel1.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 160, 160));
+        Materias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MateriasMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                MateriasMouseExited(evt);
+            }
+        });
+        jPanel1.add(Materias, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, 120, 40));
+
+        Clases.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Clases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/estudiar.png"))); // NOI18N
+        Clases.setText("Crear Asignación");
+        Clases.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                ClasesMouseMoved(evt);
+            }
+        });
+        Clases.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ClasesMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ClasesMouseExited(evt);
+            }
+        });
+        jPanel1.add(Clases, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 170, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 580));
 
@@ -309,10 +341,29 @@ public class Pag_PrinP extends javax.swing.JFrame {
         jLabel20.setText("tareas y proyectos próximos a evaluar.");
         jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Online Education Isometric    Il.jpg"))); // NOI18N
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 330, -1, -1));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 800, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImagenActionPerformed
+        
+    }//GEN-LAST:event_ImagenActionPerformed
+
+    private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel1MouseMoved
+
+    private void MinimizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MinimizarActionPerformed
+        this.setState (Pag_Principal.ICONIFIED);
+    }//GEN-LAST:event_MinimizarActionPerformed
+
+    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_CerrarActionPerformed
 
     private void SalirMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirMouseMoved
         Salir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(143,170,220)));
@@ -356,28 +407,52 @@ public class Pag_PrinP extends javax.swing.JFrame {
         Perfil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(168,201,255)));
     }//GEN-LAST:event_PerfilMouseExited
 
-    private void ClasesMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClasesMouseMoved
-        Clases.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(143,170,220)));
-    }//GEN-LAST:event_ClasesMouseMoved
-
-    private void ClasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClasesMouseClicked
-        /*this.setVisible(false);
-        Clases v= new Clases();
-        v.setVisible(true);*/
-    }//GEN-LAST:event_ClasesMouseClicked
-
-    private void ClasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClasesMouseExited
-        Clases.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(168,201,255)));
-    }//GEN-LAST:event_ClasesMouseExited
-
     private void SaludMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaludMouseMoved
         Salud.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(143,170,220)));
     }//GEN-LAST:event_SaludMouseMoved
 
     private void SaludMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaludMouseClicked
-        this.setVisible(false);
-        Salud e = new Salud();
-        e.setVisible(true);
+ResultSet resultado = null;
+        int cod;
+        String enfermedad;
+        
+        cod =Integer.parseInt(JOptionPane.showInputDialog("Digita tu código de profesor"));
+        
+        try{
+           conex = DriverManager.getConnection("jdbc:mysql://localhost/thats_study","root","");
+           Statement st=conex.createStatement();
+           
+           resultado=st.executeQuery("SELECT * FROM profesor  WHERE Codigo_Profe ="+cod);
+           
+           if (resultado.next()==true){ 
+                enfermedad = resultado.getString("Enfermedad");                              
+                if (enfermedad.equals("Diabetes")){
+                    this.setVisible(false);
+                    Diabetes_Profe e = new Diabetes_Profe();
+                    e.setVisible(true);
+                }else if (enfermedad.equals("Tiroides")){
+                    this.setVisible(false);
+                    Tiroides_Profe e = new Tiroides_Profe();
+                    e.setVisible(true);
+                }else if (enfermedad.equals("Hipertension")){
+                    this.setVisible(false);
+                    Hiperten_Profe e = new Hiperten_Profe();
+                    e.setVisible(true);
+                }else if (enfermedad.equals("No_aplica")){
+                    this.setVisible(false);
+                    Salud_Profe e = new Salud_Profe();
+                    e.setVisible(true);
+                } 
+           }else if (resultado.next()==false){
+               JOptionPane.showMessageDialog(null,"Código de profesor no existente");
+           }
+           
+            st.close();
+            conex.close();
+
+        }catch (SQLException ex){
+            Logger.getLogger(Crea_grupos.class.getName()).log(Level.SEVERE,null,ex);
+        }
     }//GEN-LAST:event_SaludMouseClicked
 
     private void SaludMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaludMouseExited
@@ -389,28 +464,42 @@ public class Pag_PrinP extends javax.swing.JFrame {
     }//GEN-LAST:event_ClaseMouseMoved
 
     private void ClaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClaseMouseClicked
-
+     this.setVisible(false);
+     Crear_Mate v = new Crear_Mate();
+     v.setVisible(true);
     }//GEN-LAST:event_ClaseMouseClicked
 
     private void ClaseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClaseMouseExited
         Clase.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(168,201,255)));
     }//GEN-LAST:event_ClaseMouseExited
 
-    private void ImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImagenActionPerformed
-        
-    }//GEN-LAST:event_ImagenActionPerformed
+    private void MateriasMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MateriasMouseMoved
+        Materias.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(143,170,220)));
+    }//GEN-LAST:event_MateriasMouseMoved
 
-    private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel1MouseMoved
+    private void MateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MateriasMouseClicked
+        this.setVisible(false);
+        Entregas v= new Entregas();
+        v.setVisible(true);
+    }//GEN-LAST:event_MateriasMouseClicked
 
-    private void MinimizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MinimizarActionPerformed
-        this.setState (Pag_Principal.ICONIFIED);
-    }//GEN-LAST:event_MinimizarActionPerformed
+    private void MateriasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MateriasMouseExited
+        Materias.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(168,201,255)));
+    }//GEN-LAST:event_MateriasMouseExited
 
-    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_CerrarActionPerformed
+    private void ClasesMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClasesMouseMoved
+        Clases.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(143,170,220)));
+    }//GEN-LAST:event_ClasesMouseMoved
+
+    private void ClasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClasesMouseClicked
+        this.setVisible(false);
+        Crea_Asig v= new Crea_Asig();
+        v.setVisible(true);
+    }//GEN-LAST:event_ClasesMouseClicked
+
+    private void ClasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClasesMouseExited
+        Clases.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(168,201,255)));
+    }//GEN-LAST:event_ClasesMouseExited
 
     /**
      * @param args the command line arguments
@@ -453,6 +542,7 @@ public class Pag_PrinP extends javax.swing.JFrame {
     private javax.swing.JLabel Clases;
     private javax.swing.JButton Imagen;
     private javax.swing.JLabel Inicio;
+    private javax.swing.JLabel Materias;
     private javax.swing.JButton Minimizar;
     private javax.swing.JLabel Perfil;
     private javax.swing.JLabel Salir;
@@ -467,6 +557,7 @@ public class Pag_PrinP extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
